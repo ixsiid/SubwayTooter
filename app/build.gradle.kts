@@ -11,10 +11,11 @@ plugins {
     id("io.gitlab.arturbosch.detekt")
 }
 
-val keystorePropertiesFile: File = rootProject.file("keystore.properties")
-val keystoreProperties = Properties().apply {
-    load(FileInputStream(keystorePropertiesFile))
-}
+// 署名付きビルドを一旦やめる
+// val keystorePropertiesFile: File = rootProject.file("keystore.properties")
+// val keystoreProperties = Properties().apply {
+//     load(FileInputStream(keystorePropertiesFile))
+// }
 
 android {
     namespace = "jp.juggler.subwaytooter"
@@ -75,6 +76,7 @@ android {
     }
 
     buildTypes {
+    // 署名付きビルドを一旦やめる
     //  release {
     //      isMinifyEnabled = false
     //      isShrinkResources = false
