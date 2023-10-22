@@ -1,0 +1,35 @@
+# https://qiita.com/uhooi/items/70ffe67ba65d33189db2
+name: CI
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    # チェックアウト
+    - uses: actions/checkout@v3
+
+    # JDKのセットアップ
+    - name: set up JDK 17
+      uses: actions/setup-java@v3
+      with:
+        distribution: 'zulu'
+        java-version: '17'
+
+    # Gradleのキャッシュ復元
+    - uses: actions/cache@v3
+      with:
+        path: ~/.gradle/caches
+        key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*') }}
+        restore-keys: |
+          ${{ runner.os }}-gradle-
+
+    # 依存関係の出力
+    - name: Displays the Android dependencies of the project
+      run: ./gradlew androidDependencies
+
+    # コンパイル
+    - name: Run Compile
+      run: ./gradlew assembleDebug
